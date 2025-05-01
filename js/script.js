@@ -21,7 +21,27 @@ const MAX_ENTRIES = 50;
 let entries = JSON.parse(localStorage.getItem('travelEntries')) || [];
 let isEditing = false, currentEditId = null;
 
-// Core Functions
+//  Image Conversion Function
+const urlToBase64 = async (url) => {
+    try {
+        // Skip conversion if already Base64 or empty
+        if (!url || url.startsWith('data:image')) return url;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch image');
+        const blob = await response.blob();
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        });
+    } catch (error) {
+        console.error('Image conversion failed:', error);
+        return url; // Fallback to original URL
+    }
+};
+
+//  Core Functions
 const init = () => {
     renderEntries(entries);
     updateCounter();
@@ -41,7 +61,7 @@ const init = () => {
     checkForEdit();
 };
 
-const handleSubmit = e => {
+const handleSubmit = async (e) => { // Made async
     e.preventDefault();
     const formData = {
         location: document.getElementById('location').value,
@@ -58,16 +78,28 @@ const handleSubmit = e => {
         return alert(`Maximum ${MAX_ENTRIES} entries reached. Delete some first.`);
     }
 
+    // Convert image URL to Base64 if needed
+    const processedImage = await urlToBase64(formData.image);
+
     const entry = {
         id: isEditing ? currentEditId : Date.now(),
         ...formData,
-        image: formData.image || null
+        image: processedImage || null
     };
 
-    isEditing ? entries[entries.findIndex(e => e.id === currentEditId)] = entry : entries.push(entry);
+    if (isEditing) {
+        const index = entries.findIndex(e => e.id === currentEditId);
+        if (index !== -1) {
+            entries[index] = entry;
+        }
+    } else {
+        entries.push(entry);
+    }
+    
     localStorage.setItem('travelEntries', JSON.stringify(entries));
     location.href = 'index.html';
 };
+
 
 const renderEntries = (entriesToRender = entries) => {
     if (!elements.container) return;
@@ -75,8 +107,12 @@ const renderEntries = (entriesToRender = entries) => {
     elements.container.innerHTML = entriesToRender.length ? entriesToRender.map(entry => `
         <div class="entry-card">
             ${entry.image ? `
-            <a href="${entry.image}" target="_blank" rel="noopener noreferrer">
-                <img src="${entry.image}" alt="${entry.location}" class="entry-image" 
+            <a href="${entry.image.startsWith('data:image') ? '#' : entry.image}" 
+               target="_blank" 
+               rel="noopener noreferrer">
+                <img src="${entry.image}" 
+                     alt="${entry.location}" 
+                     class="entry-image" 
                      onerror="this.onerror=null;this.src='https://via.placeholder.com/300x200?text=Image+Not+Available'">
             </a>` : ''}
             <div class="entry-content">
@@ -100,7 +136,6 @@ const renderEntries = (entriesToRender = entries) => {
     );
 };
 
-// Helper Functions
 const checkForEdit = () => {
     if (location.search.includes('edit=')) {
         isEditing = true;
