@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Travel Journal</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <h1>My Travel Journal</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="add-entry.html">Add Entry</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-filter">
+            <input type="text" id="search-input" placeholder="Search by location...">
+            <button id="search-btn">Search</button>
+            <button id="clear-search">Clear</button>
+        </section>
+
+        <section class="entries-container" id="entries-container">
+            <!-- Entries will be  added here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Travel Journal</p>
+    </footer>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
