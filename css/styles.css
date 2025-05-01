@@ -93,13 +93,7 @@ footer {
     gap: 2rem;
 }
 
-.entry-card {
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
+
 
 .entry-card:hover {
     transform: translateY(-5px);
