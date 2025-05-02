@@ -1,6 +1,6 @@
 # My Travel Journal ✈️
 project has been created by Myles isaac.
-
+here is the live link to the website.
 (https://travel-journal-mu-kohl.vercel.app/)  
 kindly note please open using microsoft edge to view entries 
  
