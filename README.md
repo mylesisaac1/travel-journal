@@ -4,7 +4,7 @@ project has been created by Myles isaac.
 (https://travel-journal-mu-kohl.vercel.app/)  
 kindly note please open using microsoft edge to view entries 
  
-*A beautiful digital journal to document your travel adventures with photos and memories*
+*A beautiful digital journal to document your travel adventures with photos and memories. my travel journal is a digital travel journal designed for globetrotters, backpackers, and casual travelers to document their adventures in a personalized, organized, and visually appealing way. The app combines journaling, photo storage, mapping, and social sharing to create a seamless travel memory-keeping experience.*
 
 
 
